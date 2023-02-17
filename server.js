@@ -3,23 +3,32 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: '.env-local' });
 
-const PORT = process.env.PORT || '3000';
+const PORT = process.env.PORT || '3001';
 
 const app = express();
 
-// middleweare
+/**
+ * Middleware
+ */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// routes
-app.get('/', (req, res) => {
-  res.status(200).json({ name: 'Vadym', doing: 'Coding' });
+/**
+ * Routes
+ */
+
+app.get('/', (request, response) => {
+  response
+    .status(200)
+    .send(
+      "This is not why you're here. Head to /user/:id and replace :id with your user id"
+    );
 });
 
 const userRouter = require('./routes/user');
 app.use('/user', userRouter);
 
-// start listening
+/**Start listening */
 app.listen(PORT, () => {
   console.log(`Listening for requests on port ${PORT}`);
 });
